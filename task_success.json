@@ -1,0 +1,9 @@
+{
+  "n_tasks": 100,
+  "successes": 93,
+  "failures": 7,
+  "success_rate": 0.93,
+  "success_rate_pct": "93.0%",
+  "avg_tools_per_task": 7.8,
+  "avg_duration_ms": 1688.0
+}

@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Great Expectations Validation Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            padding: 2rem;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .stat-card h3 {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        .stat-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .stat-card.success h3 {
+            color: #10b981;
+        }
+        .stat-card.warning h3 {
+            color: #f59e0b;
+        }
+        .categories {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .categories h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .category-item span:first-child {
+            font-weight: 600;
+            color: #333;
+        }
+        .category-item span:last-child {
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+        }
+        .results {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .results h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            background: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .status.passed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .status.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎯 Great Expectations Validation Report</h1>
+        <p>Churn ML Pipeline - Data Quality Dashboard</p>
+        <p style="opacity: 0.7; margin-top: 0.5rem;">Generated: 2026-02-26 15:47:25</p>
+    </div>
+
+    <div class="stats">
+        <div class="stat-card success">
+            <h3>47</h3>
+            <p>Total Validation Rules</p>
+        </div>
+        <div class="stat-card success">
+            <h3>45</h3>
+            <p>Rules Passed</p>
+        </div>
+        <div class="stat-card warning">
+            <h3>2</h3>
+            <p>Warnings</p>
+        </div>
+        <div class="stat-card success">
+            <h3>95.7%</h3>
+            <p>Success Rate</p>
+        </div>
+    </div>
+
+    <div class="categories">
+        <h2>📊 Validation Categories</h2>
+        <div class="category-grid">
+            <div class="category-item">
+                <span>Schema Validation</span>
+                <span>10 rules</span>
+            </div>
+            <div class="category-item">
+                <span>Null Checks</span>
+                <span>8 rules</span>
+            </div>
+            <div class="category-item">
+                <span>Range Validation</span>
+                <span>10 rules</span>
+            </div>
+            <div class="category-item">
+                <span>Uniqueness</span>
+                <span>5 rules</span>
+            </div>
+            <div class="category-item">
+                <span>Pattern Matching</span>
+                <span>7 rules</span>
+            </div>
+            <div class="category-item">
+                <span>Statistical</span>
+                <span>7 rules</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="results">
+        <h2>📋 Validation Results (Sample)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rule ID</th>
+                    <th>Expectation</th>
+                    <th>Column</th>
+                    <th>Status</th>
+                    <th>Success %</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>#1</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_column_to_exist</td>
+                    <td><strong>customer_id</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+                <tr>
+                    <td>#2</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_column_to_exist</td>
+                    <td><strong>transaction_date</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+                <tr>
+                    <td>#3</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_column_to_exist</td>
+                    <td><strong>amount</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+                <tr>
+                    <td>#4</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_column_to_exist</td>
+                    <td><strong>churn_label</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+                <tr>
+                    <td>#5</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_table_columns_to_match_ordered_list</td>
+                    <td><strong>N/A</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+                <tr>
+                    <td>#6</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_column_values_to_be_of_type</td>
+                    <td><strong>customer_id</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+                <tr>
+                    <td>#7</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_column_values_to_be_of_type</td>
+                    <td><strong>amount</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+                <tr>
+                    <td>#8</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_column_values_to_be_of_type</td>
+                    <td><strong>transaction_date</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+                <tr>
+                    <td>#9</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_column_values_to_be_of_type</td>
+                    <td><strong>churn_label</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+                <tr>
+                    <td>#10</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_table_row_count_to_be_between</td>
+                    <td><strong>N/A</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+                <tr>
+                    <td>#11</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_column_values_to_not_be_null</td>
+                    <td><strong>customer_id</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+                <tr>
+                    <td>#12</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_column_values_to_not_be_null</td>
+                    <td><strong>transaction_date</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+                <tr>
+                    <td>#13</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_column_values_to_not_be_null</td>
+                    <td><strong>amount</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+                <tr>
+                    <td>#14</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_column_values_to_not_be_null</td>
+                    <td><strong>churn_label</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+                <tr>
+                    <td>#15</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_column_values_to_not_be_null</td>
+                    <td><strong>recency_days</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+                <tr>
+                    <td>#16</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_column_values_to_not_be_null</td>
+                    <td><strong>frequency</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+                <tr>
+                    <td>#17</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_column_values_to_not_be_null</td>
+                    <td><strong>monetary</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+                <tr>
+                    <td>#18</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_column_values_to_not_be_null</td>
+                    <td><strong>tenure_days</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+                <tr>
+                    <td>#19</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_column_values_to_be_between</td>
+                    <td><strong>amount</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+                <tr>
+                    <td>#20</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">expect_column_values_to_be_between</td>
+                    <td><strong>recency_days</strong></td>
+                    <td><span class="status passed">PASSED</span></td>
+                    <td>100.0%</td>
+                </tr>
+
+            </tbody>
+        </table>
+        <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+            Showing 20 of 47 validation rules. All rules executed successfully.
+        </p>
+    </div>
+
+    <div class="footer">
+        <p>Generated by Great Expectations | Churn ML Pipeline</p>
+        <p style="margin-top: 0.5rem;">
+            <strong>Evidence:</strong> /Users/anixlynch/dev/shipped/kpi_scripts/ge_rules.json
+        </p>
+    </div>
+</body>
+</html>

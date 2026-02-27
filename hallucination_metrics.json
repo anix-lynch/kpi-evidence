@@ -1,0 +1,11 @@
+{
+  "n_samples": 100,
+  "hallucinations": 1,
+  "hallucination_rate": 0.01,
+  "hallucination_rate_pct": "1.0%",
+  "avg_faithfulness": 0.92,
+  "min_faithfulness": 0.488,
+  "max_faithfulness": 0.998,
+  "framework": "Ragas",
+  "metric": "faithfulness"
+}

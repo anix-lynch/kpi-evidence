@@ -1,0 +1,479 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phoenix - GenAI Ops Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 2rem;
+        }
+        .header {
+            background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 24px rgba(249, 115, 22, 0.3);
+        }
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .header p {
+            opacity: 0.9;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .metric-card {
+            background: #1e293b;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .metric-card h3 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .metric-card p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        .metric-card.success h3 {
+            color: #10b981;
+        }
+        .metric-card.warning h3 {
+            color: #f59e0b;
+        }
+        .metric-card.info h3 {
+            color: #3b82f6;
+        }
+        .traces {
+            background: #1e293b;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            margin-bottom: 2rem;
+        }
+        .traces h2 {
+            margin-bottom: 1.5rem;
+            color: #f1f5f9;
+        }
+        .trace-item {
+            background: #0f172a;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #f97316;
+        }
+        .trace-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .trace-id {
+            font-family: monospace;
+            color: #f97316;
+            font-weight: 600;
+        }
+        .trace-time {
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+        .trace-query {
+            color: #e2e8f0;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+        .trace-stats {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .trace-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .trace-stat span:first-child {
+            color: #94a3b8;
+        }
+        .trace-stat span:last-child {
+            color: #f1f5f9;
+            font-weight: 600;
+        }
+        .status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .status.success {
+            background: #064e3b;
+            color: #6ee7b7;
+        }
+        .status.failed {
+            background: #7f1d1d;
+            color: #fca5a5;
+        }
+        .faithfulness {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .faithfulness.high {
+            background: #064e3b;
+            color: #6ee7b7;
+        }
+        .faithfulness.medium {
+            background: #78350f;
+            color: #fcd34d;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔥 Phoenix - GenAI Ops Dashboard</h1>
+        <p>Real-time Agent Monitoring & Evaluation</p>
+        <p style="opacity: 0.7; margin-top: 0.5rem;">Last Updated: 2026-02-26 15:51:28</p>
+    </div>
+
+    <div class="metrics">
+        <div class="metric-card success">
+            <h3>93.0%</h3>
+            <p>Task Success Rate</p>
+        </div>
+        <div class="metric-card success">
+            <h3>1.0%</h3>
+            <p>Hallucination Rate</p>
+        </div>
+        <div class="metric-card info">
+            <h3>149ms</h3>
+            <p>p95 Latency</p>
+        </div>
+        <div class="metric-card info">
+            <h3>7.8</h3>
+            <p>Avg Tools per Task</p>
+        </div>
+    </div>
+
+    <div class="traces">
+        <h2>🔍 Recent Agent Traces</h2>
+
+        <div class="trace-item">
+            <div class="trace-header">
+                <span class="trace-id">trace_1</span>
+                <span class="trace-time">2026-02-26 15:51:28</span>
+            </div>
+            <div class="trace-query">
+                "Analyze churn risk for enterprise customer cohort"
+            </div>
+            <div class="trace-stats">
+                <div class="trace-stat">
+                    <span>Status:</span>
+                    <span class="status success">SUCCESS</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Tools Used:</span>
+                    <span>12</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Latency:</span>
+                    <span>145ms</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Faithfulness:</span>
+                    <span class="faithfulness medium">0.88</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="trace-item">
+            <div class="trace-header">
+                <span class="trace-id">trace_2</span>
+                <span class="trace-time">2026-02-26 14:51:28</span>
+            </div>
+            <div class="trace-query">
+                "Generate fraud detection report for Q4 transactions"
+            </div>
+            <div class="trace-stats">
+                <div class="trace-stat">
+                    <span>Status:</span>
+                    <span class="status success">SUCCESS</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Tools Used:</span>
+                    <span>14</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Latency:</span>
+                    <span>146ms</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Faithfulness:</span>
+                    <span class="faithfulness high">0.93</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="trace-item">
+            <div class="trace-header">
+                <span class="trace-id">trace_3</span>
+                <span class="trace-time">2026-02-26 13:51:28</span>
+            </div>
+            <div class="trace-query">
+                "Build customer segmentation model with RFM features"
+            </div>
+            <div class="trace-stats">
+                <div class="trace-stat">
+                    <span>Status:</span>
+                    <span class="status success">SUCCESS</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Tools Used:</span>
+                    <span>9</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Latency:</span>
+                    <span>125ms</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Faithfulness:</span>
+                    <span class="faithfulness high">0.95</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="trace-item">
+            <div class="trace-header">
+                <span class="trace-id">trace_4</span>
+                <span class="trace-time">2026-02-26 12:51:28</span>
+            </div>
+            <div class="trace-query">
+                "Optimize feature engineering pipeline for real-time inference"
+            </div>
+            <div class="trace-stats">
+                <div class="trace-stat">
+                    <span>Status:</span>
+                    <span class="status success">SUCCESS</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Tools Used:</span>
+                    <span>14</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Latency:</span>
+                    <span>178ms</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Faithfulness:</span>
+                    <span class="faithfulness high">0.97</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="trace-item">
+            <div class="trace-header">
+                <span class="trace-id">trace_5</span>
+                <span class="trace-time">2026-02-26 11:51:28</span>
+            </div>
+            <div class="trace-query">
+                "Deploy ensemble model to production endpoint"
+            </div>
+            <div class="trace-stats">
+                <div class="trace-stat">
+                    <span>Status:</span>
+                    <span class="status success">SUCCESS</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Tools Used:</span>
+                    <span>7</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Latency:</span>
+                    <span>144ms</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Faithfulness:</span>
+                    <span class="faithfulness high">0.97</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="trace-item">
+            <div class="trace-header">
+                <span class="trace-id">trace_6</span>
+                <span class="trace-time">2026-02-26 10:51:28</span>
+            </div>
+            <div class="trace-query">
+                "Extract key metrics from financial statements"
+            </div>
+            <div class="trace-stats">
+                <div class="trace-stat">
+                    <span>Status:</span>
+                    <span class="status success">SUCCESS</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Tools Used:</span>
+                    <span>4</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Latency:</span>
+                    <span>179ms</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Faithfulness:</span>
+                    <span class="faithfulness high">0.92</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="trace-item">
+            <div class="trace-header">
+                <span class="trace-id">trace_7</span>
+                <span class="trace-time">2026-02-26 09:51:28</span>
+            </div>
+            <div class="trace-query">
+                "Create marketing campaign ROI analysis"
+            </div>
+            <div class="trace-stats">
+                <div class="trace-stat">
+                    <span>Status:</span>
+                    <span class="status success">SUCCESS</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Tools Used:</span>
+                    <span>3</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Latency:</span>
+                    <span>157ms</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Faithfulness:</span>
+                    <span class="faithfulness high">0.94</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="trace-item">
+            <div class="trace-header">
+                <span class="trace-id">trace_8</span>
+                <span class="trace-time">2026-02-26 08:51:28</span>
+            </div>
+            <div class="trace-query">
+                "Predict transaction fraud probability (real-time)"
+            </div>
+            <div class="trace-stats">
+                <div class="trace-stat">
+                    <span>Status:</span>
+                    <span class="status success">SUCCESS</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Tools Used:</span>
+                    <span>9</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Latency:</span>
+                    <span>157ms</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Faithfulness:</span>
+                    <span class="faithfulness high">0.94</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="trace-item">
+            <div class="trace-header">
+                <span class="trace-id">trace_9</span>
+                <span class="trace-time">2026-02-26 07:51:28</span>
+            </div>
+            <div class="trace-query">
+                "Generate SQL query for revenue attribution by channel"
+            </div>
+            <div class="trace-stats">
+                <div class="trace-stat">
+                    <span>Status:</span>
+                    <span class="status success">SUCCESS</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Tools Used:</span>
+                    <span>13</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Latency:</span>
+                    <span>143ms</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Faithfulness:</span>
+                    <span class="faithfulness medium">0.88</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="trace-item">
+            <div class="trace-header">
+                <span class="trace-id">trace_10</span>
+                <span class="trace-time">2026-02-26 06:51:28</span>
+            </div>
+            <div class="trace-query">
+                "Summarize legal contract clauses for compliance audit"
+            </div>
+            <div class="trace-stats">
+                <div class="trace-stat">
+                    <span>Status:</span>
+                    <span class="status success">SUCCESS</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Tools Used:</span>
+                    <span>13</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Latency:</span>
+                    <span>150ms</span>
+                </div>
+                <div class="trace-stat">
+                    <span>Faithfulness:</span>
+                    <span class="faithfulness high">0.98</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <p>Phoenix OSS - GenAI Observability Platform</p>
+        <p style="margin-top: 0.5rem;">
+            <strong>Evidence:</strong> /Users/anixlynch/dev/shipped/kpi_scripts/*.json
+        </p>
+    </div>
+</body>
+</html>
