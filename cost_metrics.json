@@ -1,0 +1,31 @@
+{
+  "avg_input_tokens": 2500,
+  "avg_output_tokens": 800,
+  "avg_total_tokens": 3300,
+  "cost_per_request": 0.0195,
+  "monthly_requests": 100,
+  "monthly_cost": 1.95,
+  "top_endpoints": [
+    {
+      "name": "Churn Risk Analysis",
+      "requests": 35,
+      "avg_tokens": 3200,
+      "cost": 0.6719999999999999
+    },
+    {
+      "name": "Fraud Detection",
+      "requests": 28,
+      "avg_tokens": 2800,
+      "cost": 0.4704
+    },
+    {
+      "name": "SQL Generation",
+      "requests": 22,
+      "avg_tokens": 2100,
+      "cost": 0.2772
+    }
+  ],
+  "pricing_model": "Claude 3.5 Sonnet",
+  "input_cost_per_1k": 0.003,
+  "output_cost_per_1k": 0.015
+}

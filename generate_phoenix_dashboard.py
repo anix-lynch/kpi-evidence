@@ -21,6 +21,9 @@ def generate_phoenix_html():
     with open('/Users/anixlynch/dev/shipped/kpi_scripts/latency_metrics.json', 'r') as f:
         latency_data = json.load(f)
     
+    with open('/Users/anixlynch/dev/kpi-evidence/cost_metrics.json', 'r') as f:
+        cost_data = json.load(f)
+    
     # Generate sample traces
     traces = []
     for i in range(10):
@@ -229,6 +232,14 @@ def generate_phoenix_html():
         <div class="metric-card info">
             <h3>{task_data['avg_tools_per_task']:.1f}</h3>
             <p>Avg Tools per Task</p>
+        </div>
+        <div class="metric-card warning">
+            <h3>${cost_data['cost_per_request']}</h3>
+            <p>Cost per Request</p>
+        </div>
+        <div class="metric-card warning">
+            <h3>${cost_data['monthly_cost']}</h3>
+            <p>Monthly Cost</p>
         </div>
     </div>
 
